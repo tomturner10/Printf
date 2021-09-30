@@ -17,8 +17,10 @@ void	ft_char(t_hold *args);
 void	ft_string(t_hold *args);
 void	ft_integer(t_hold *args);
 void	ft_unsignedint(t_hold *args);
-void	ft_lowerhex(t_hold *args);
-void	ft_upperhex(t_hold *args);
-void	ft_pointer(t_hold *args);
+void	ft_hex(t_hold *args, char c);
+void	ft_ptr(t_hold *table);
+//void	ft_lowerhex(t_hold *args);
+//void	ft_upperhex(t_hold *args);
+//void	ft_pointer(t_hold *args);
 
 #endif

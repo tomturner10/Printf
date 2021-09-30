@@ -1,13 +1,11 @@
 #include "ft_printf.h"
 
-static int	ft_countnbr(int nb)
+static int	ft_countnbr(unsigned int nb)
 {
 	int	count;
 
 	count = 1;
-	if (nb < 0)
-		count++;
-	while (nb > 9 || nb < -9)
+	while (nb > 9)
 	{
 		nb = nb / 10;
 		count++;

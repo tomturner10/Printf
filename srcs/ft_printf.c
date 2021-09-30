@@ -10,12 +10,10 @@ static void	ft_getflag(const char c, t_hold *args)
 		ft_integer(args);
 	else if (c == 'u')
 		ft_unsignedint(args);
-	else if (c == 'x')
-		ft_lowerhex(args);
-	else if (c == 'X')
-		ft_upperhex(args);
+	else if (c == 'x' || c == 'X')
+		ft_hex(args, c);
 	else if (c == 'p')
-		ft_pointer(args);
+		ft_ptr(args);
 	else if (c == '%')
 	{
 		ft_putchar_fd('%', 1);
@@ -43,10 +41,11 @@ int	ft_printf(const char *str, ...)
 			ft_putchar_fd(str[i], 1);
 			args->count++;
 		}
-		else
+		else if (str[i] == '%')
 		{
 			i++;
-			ft_getflag(str[i], args);
+			char c = str[i];
+			ft_getflag(c, args);
 		}
 		i++;
 	}
