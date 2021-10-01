@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tturner <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/01 12:27:24 by tturner           #+#    #+#             */
+/*   Updated: 2021/10/01 12:27:24 by tturner          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 static void	ft_getflag(const char c, t_hold *args)
@@ -5,7 +17,7 @@ static void	ft_getflag(const char c, t_hold *args)
 	if (c == 'c')
 		ft_char(args);
 	else if (c == 's')
-		ft_string(args); 
+		ft_string(args);
 	else if (c == 'd' || c == 'i')
 		ft_integer(args);
 	else if (c == 'u')
@@ -13,7 +25,7 @@ static void	ft_getflag(const char c, t_hold *args)
 	else if (c == 'x' || c == 'X')
 		ft_hex(args, c);
 	else if (c == 'p')
-		ft_ptr(args);
+		ft_pointer(args);
 	else if (c == '%')
 	{
 		ft_putchar_fd('%', 1);
@@ -21,18 +33,26 @@ static void	ft_getflag(const char c, t_hold *args)
 	}
 }
 
+static t_hold	*ft_initargs(void)
+{
+	t_hold	*args;
+
+	args = (t_hold *)malloc(sizeof(t_hold));
+	if (args == NULL)
+		return (NULL);
+	args->count = 0;
+	return (args);
+}
+
 int	ft_printf(const char *str, ...)
 {
 	t_hold	*args;
-	int count;
-	int i;
+	int		count;
+	int		i;
 
 	i = 0;
 	count = 0;
-	args = (t_hold *)malloc(sizeof(t_hold));
-	if (args == NULL)
-		return (-1);
-	args->count = 0;
+	args = ft_initargs();
 	va_start(args->arg, str);
 	while (str[i] != '\0')
 	{
@@ -42,15 +62,11 @@ int	ft_printf(const char *str, ...)
 			args->count++;
 		}
 		else if (str[i] == '%')
-		{
-			i++;
-			char c = str[i];
-			ft_getflag(c, args);
-		}
+			ft_getflag(str[++i], args);
 		i++;
 	}
 	count = args->count;
 	va_end(args->arg);
 	free(args);
-	return count;
+	return (count);
 }
